@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarveshwar Senthil Kumar | Frontend Developer</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0066ff;
+            --primary-dark: #0052cc;
+            --secondary: #00f0ff;
+            --dark: #0a0a0a;
+            --light: #ffffff;
+            --gray: #f5f5f7;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+
+        /* 3D Perspective Container */
+        .perspective-container {
+            perspective: 1000px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        header {
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transform-style: preserve-3d;
+            transform: translateZ(20px);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: var(--transition);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 5% 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 102, 255, 0.1) 0%, rgba(0, 10, 20, 0) 70%);
+            z-index: -1;
+            animation: pulse 15s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(10%, 10%);
+            }
+            100% {
+                transform: translate(-10%, -10%);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--light), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transform-style: preserve-3d;
+            transform: translateZ(30px);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            transform-style: preserve-3d;
+            transform: translateZ(20px);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            transform-style: preserve-3d;
+            transform: translateZ(20px);
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: var(--dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 240, 255, 0.2);
+        }
+
+        .btn-secondary {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--light);
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: 6rem 5%;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            transform-style: preserve-3d;
+            transform: translateZ(20px);
+        }
+
+        .section-header p {
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto;
+            transform-style: preserve-3d;
+            transform: translateZ(10px);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            transform-style: preserve-3d;
+            transform: translateZ(0);
+            backdrop-filter: blur(10px);
+            position: relative;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px) translateZ(10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(0, 240, 255, 0.2);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.1) 0%, rgba(0, 240, 255, 0.05) 100%);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .project-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-content p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-links a {
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+        }
+
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.3;
+            z-index: -1;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            background: var(--primary);
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            background: var(--secondary);
+            top: 60%;
+            left: 80%;
+            animation-delay: 3s;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            background: #ff00aa;
+            top: 30%;
+            left: 70%;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 5%;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            margin-top: 4rem;
+            position: relative;
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .footer-content p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .contact-item a {
+            color: var(--light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .contact-item a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: var(--light);
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        /* 3D Card Effect */
+        @media (hover: hover) {
+            .project-card {
+                transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1);
+                transform-style: preserve-3d;
+                will-change: transform;
+                transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            }
+
+            .project-card:hover {
+                transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale(1.03) translateY(-10px);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="perspective-container">
+        <!-- Floating background elements -->
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+
+        <header>
+            <div class="logo">SSK</div>
+            <nav>
+                <ul>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="https://github.com/SarveshwarSenthilKumar" target="_blank">GitHub</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <h1>Sarveshwar Senthil Kumar</h1>
+            <p>Frontend developer crafting immersive digital experiences with cutting-edge technologies and pixel-perfect designs.</p>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary">
+                    <i class="fas fa-eye"></i> View Projects
+                </a>
+                <a href="https://github.com/SarveshwarSenthilKumar" target="_blank" class="btn btn-secondary">
+                    <i class="fab fa-github"></i> GitHub Profile
+                </a>
+            </div>
+        </section>
+
+        <section class="projects" id="projects">
+            <div class="section-header">
+                <h2>Featured Projects</h2>
+                <p>A showcase of my frontend development work, from landing pages to full web applications.</p>
+            </div>
+
+            <div class="projects-grid">
+                <!-- Portfolio Website -->
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>Portfolio Website</h3>
+                        <p>My personal portfolio website showcasing my skills and projects with a clean, modern design.</p>
+                        <div class="project-links">
+                            <a href="https://sarveshwarsenthilkumar.github.io/" target="_blank" class="btn btn-secondary">Live Site</a>
+                            <a href="https://github.com/SarveshwarSenthilKumar/SarveshwarSenthilKumar.github.io" target="_blank" class="btn btn-primary">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flask Development Template -->
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>Flask Development Template</h3>
+                        <p>A starter template for Flask web applications with modern frontend tooling and best practices.</p>
+                        <div class="project-links">
+                            <a href="https://sarveshwarsenthilkumar.github.io/Flask-Development-Template/" target="_blank" class="btn btn-secondary">Live Site</a>
+                            <a href="https://github.com/SarveshwarSenthilKumar/Flask-Development-Template" target="_blank" class="btn btn-primary">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Auto Throttle Project Page -->
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>Auto Throttle Project</h3>
+                        <p>A project page for Auto Throttle featuring interactive elements and smooth animations.</p>
+                        <div class="project-links">
+                            <a href="https://sarveshwarsenthilkumar.github.io/autothrottle.github.io/" target="_blank" class="btn btn-secondary">Live Site</a>
+                            <a href="https://github.com/SarveshwarSenthilKumar/autothrottle.github.io" target="_blank" class="btn btn-primary">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Roamify Landing Page -->
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>Roamify Landing Page</h3>
+                        <p>A sleek landing page for Roamify travel services with responsive design and engaging visuals.</p>
+                        <div class="project-links">
+                            <a href="https://sarveshwarsenthilkumar.github.io/RoamifyLanding/" target="_blank" class="btn btn-secondary">Live Site</a>
+                            <a href="https://github.com/SarveshwarSenthilKumar/RoamifyLanding" target="_blank" class="btn btn-primary">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ICS3U Notes and Portfolio -->
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>ICS3U Notes and Portfolio</h3>
+                        <p>An educational portfolio for Introduction to Computer Science with notes and project showcases.</p>
+                        <div class="project-links">
+                            <a href="https://sarveshwarsenthilkumar.github.io/IntroductionToComputerScienceICSPortfolio/" target="_blank" class="btn btn-secondary">Live Site</a>
+                            <a href="https://github.com/SarveshwarSenthilKumar/IntroductionToComputerScienceICSPortfolio" target="_blank" class="btn btn-primary">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NeoVue Product Page -->
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>NeoVue Product Page</h3>
+                        <p>A modern product page for NeoVue featuring interactive elements and smooth transitions.</p>
+                        <div class="project-links">
+                            <a href="https://sarveshwarsenthilkumar.github.io/NeoVue/" target="_blank" class="btn btn-secondary">Live Site</a>
+                            <a href="https://github.com/SarveshwarSenthilKumar/NeoVue" target="_blank" class="btn btn-primary">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Archived Original ReSourced Website -->
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>ReSourced Archive</h3>
+                        <p>An archived version of the original ReSourced website with resource management features.</p>
+                        <div class="project-links">
+                            <a href="https://sarveshwarsenthilkumar.github.io/ReSourced-Archive/" target="_blank" class="btn btn-secondary">Live Site</a>
+                            <a href="https://github.com/SarveshwarSenthilKumar/ReSourced-Archive" target="_blank" class="btn btn-primary">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CoderPort Organization Website -->
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>CoderPort Organization</h3>
+                        <p>The official website for CoderPort organization with information about projects and members.</p>
+                        <div class="project-links">
+                            <a href="https://coderport.github.io/" target="_blank" class="btn btn-secondary">Live Site</a>
+                            <a href="https://github.com/CoderPort/CoderPort.github.io" target="_blank" class="btn btn-primary">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SkyScholars Organization Website -->
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>SkyScholars Organization</h3>
+                        <p>The official website for SkyScholars organization with astronomy resources and information.</p>
+                        <div class="project-links">
+                            <a href="https://skyscholars.github.io/" target="_blank" class="btn btn-secondary">Live Site</a>
+                            <a href="https://github.com/SkyScholars/SkyScholars.github.io" target="_blank" class="btn btn-primary">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Zugzwang Chess Club Organization Website -->
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>Zugzwang Chess Club</h3>
+                        <p>The official website for Zugzwang Chess Club with tournament information and resources.</p>
+                        <div class="project-links">
+                            <a href="https://zugzwangchessclub.github.io/" target="_blank" class="btn btn-secondary">Live Site</a>
+                            <a href="https://github.com/ZugzwangChessClub/ZugzwangChessClub.github.io" target="_blank" class="btn btn-primary">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Peel Chess Tournament Website -->
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>Peel Chess Tournament</h3>
+                        <p>Information website for the Peel District-wide Chess Tournament with schedules and results.</p>
+                        <div class="project-links">
+                            <a href="https://zugzwangchessclub.github.io/PeelChessTournament2025/" target="_blank" class="btn btn-secondary">Live Site</a>
+                            <a href="https://github.com/ZugzwangChessClub/PeelChessTournament2025" target="_blank" class="btn btn-primary">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer id="contact">
+            <div class="footer-content">
+                <h3>Get In Touch</h3>
+                <p>Interested in working together or have questions about my projects? Feel free to reach out!</p>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-globe"></i>
+                        <a href="https://sarveshwarsenthilkumar.github.io/" target="_blank">sarveshwarsenthilkumar.github.io</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:sarveshwar313@gmail.com">sarveshwar313@gmail.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-github"></i>
+                        <a href="https://github.com/SarveshwarSenthilKumar" target="_blank">github.com/SarveshwarSenthilKumar</a>
+                    </div>
+                </div>
+
+                <div class="social-links">
+                    <a href="https://github.com/SarveshwarSenthilKumar" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="mailto:sarveshwar313@gmail.com"><i class="fas fa-envelope"></i></a>
+                </div>
+                
+                <p class="copyright">© 2025 Sarveshwar Senthil Kumar. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Add 3D tilt effect to project cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.project-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+                    const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+                    card.style.transform = `perspective(1000px) rotateY(${xAxis}deg) rotateX(${yAxis}deg) scale(1.03) translateY(-10px)`;
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+                });
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
