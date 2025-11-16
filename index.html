@@ -222,7 +222,7 @@
             border-radius: 16px;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: var(--transition);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             transform-style: preserve-3d;
             transform: translateZ(0);
             backdrop-filter: blur(10px);
@@ -231,12 +231,16 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            will-change: transform, box-shadow, border-color;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
 
         .project-card:hover {
-            transform: translateY(-10px) translateZ(10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            border-color: rgba(0, 240, 255, 0.2);
+            transform: translateY(-10px) translateZ(20px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(0, 240, 255, 0.3);
+            z-index: 1;
         }
 
         .project-card::before {
@@ -248,7 +252,7 @@
             height: 100%;
             background: linear-gradient(135deg, rgba(0, 102, 255, 0.1) 0%, rgba(0, 240, 255, 0.05) 100%);
             opacity: 0;
-            transition: var(--transition);
+            transition: opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             z-index: -1;
         }
 
@@ -740,19 +744,30 @@
     </div>
 
     <script>
-        // Add 3D tilt effect to project cards
+        // Add 3D tilt effect to project cards with improved performance
         document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.project-card');
             
             cards.forEach(card => {
+                let bounds;
+                const updateTransform = (x, y) => {
+                    const rect = card.getBoundingClientRect();
+                    const xPos = (x - rect.left) / rect.width;
+                    const yPos = (y - rect.top) / rect.height;
+                    const xRotate = (yPos - 0.5) * 10;
+                    const yRotate = (0.5 - xPos) * 10;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${xRotate}deg) rotateY(${yRotate}deg) scale(1.03) translateY(-10px)`;
+                };
+                
                 card.addEventListener('mousemove', (e) => {
-                    const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-                    const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-                    card.style.transform = `perspective(1000px) rotateY(${xAxis}deg) rotateX(${yAxis}deg) scale(1.03) translateY(-10px)`;
+                    requestAnimationFrame(() => {
+                        updateTransform(e.clientX, e.clientY);
+                    });
                 });
                 
                 card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1) translateY(0)';
                 });
             });
 
