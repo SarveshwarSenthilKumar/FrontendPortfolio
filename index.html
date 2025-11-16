@@ -515,7 +515,52 @@
                 <p>A showcase of my frontend development work, from landing pages to full web applications.</p>
             </div>
 
-            <div class="projects-grid">
+            <!-- Search Bar for Projects -->
+            <div class="search-container" style="margin: 2rem auto 3rem; max-width: 600px;">
+                <div class="search-wrapper" style="position: relative;">
+                    <input type="text" id="projectSearch" placeholder="Search projects..." style="
+                        width: 100%;
+                        padding: 12px 20px 12px 45px;
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                        border-radius: 30px;
+                        background: rgba(255, 255, 255, 0.05);
+                        color: white;
+                        font-size: 1rem;
+                        font-family: 'Inter', sans-serif;
+                        transition: all 0.3s ease;
+                        backdrop-filter: blur(10px);
+                    ">
+                    <i class="fas fa-search" style="
+                        position: absolute;
+                        left: 20px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        color: var(--secondary);
+                        opacity: 0.7;
+                    "></i>
+                    <div id="searchClear" style="
+                        position: absolute;
+                        right: 15px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        color: rgba(255, 255, 255, 0.5);
+                        cursor: pointer;
+                        opacity: 0;
+                        transition: opacity 0.3s ease;
+                    ">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                <div id="searchResults" style="
+                    margin-top: 10px;
+                    color: rgba(255, 255, 255, 0.7);
+                    font-size: 0.9rem;
+                    text-align: center;
+                    min-height: 20px;
+                "></div>
+            </div>
+
+            <div class="projects-grid" id="projectsGrid">
                 <!-- Portfolio Website -->
                 <div class="project-card">
                     <div class="project-content">
@@ -823,6 +868,231 @@
     </div>
 
     <script>
+        // Search functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('projectSearch');
+            const searchClear = document.getElementById('searchClear');
+            const searchResults = document.getElementById('searchResults');
+            const projectCards = document.querySelectorAll('.project-card');
+            let searchTimeout;
+
+            // Show/hide clear button based on input
+            searchInput.addEventListener('input', function() {
+                if (this.value.trim() !== '') {
+                    searchClear.style.opacity = '1';
+                } else {
+                    searchClear.style.opacity = '0';
+                    searchResults.textContent = '';
+                }
+            });
+
+            // Clear search
+            searchClear.addEventListener('click', function() {
+                searchInput.value = '';
+                this.style.opacity = '0';
+                searchResults.textContent = '';
+                
+                // Show all projects
+                projectCards.forEach(card => {
+                    card.style.display = '';
+                });
+            });
+
+            // Search as you type with debounce
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                const searchTerm = this.value.trim().toLowerCase();
+                
+                if (searchTerm === '') {
+                    searchResults.textContent = '';
+                    projectCards.forEach(card => card.style.display = '');
+                    return;
+                }
+
+                searchTimeout = setTimeout(() => {
+                    let visibleCount = 0;
+                    
+                    projectCards.forEach(card => {
+                        const title = card.querySelector('h3').textContent.toLowerCase();
+                        const description = card.querySelector('p').textContent.toLowerCase();
+                        
+                        if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                            card.style.display = '';
+                            visibleCount++;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+
+                    // Update results count
+                    if (visibleCount === 0) {
+                        searchResults.innerHTML = 'No projects found. Try different keywords.';
+                    } else {
+                        searchResults.textContent = `Found ${visibleCount} ${visibleCount === 1 ? 'project' : 'projects'}`;
+                    }
+                }, 300);
+            });
+
+            // Add focus effect
+            searchInput.addEventListener('focus', function() {
+                this.parentElement.style.boxShadow = '0 0 0 2px var(--secondary)';
+            });
+
+            searchInput.addEventListener('blur', function() {
+                this.parentElement.style.boxShadow = 'none';
+            });
+        });
+
+        // 3D card effect functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('projectSearch');
+            const searchClear = document.getElementById('searchClear');
+            const searchResults = document.getElementById('searchResults');
+            const projectCards = document.querySelectorAll('.project-card');
+            let searchTimeout;
+
+            // Show/hide clear button based on input
+            searchInput.addEventListener('input', function() {
+                if (this.value.trim() !== '') {
+                    searchClear.style.opacity = '1';
+                } else {
+                    searchClear.style.opacity = '0';
+                    searchResults.textContent = '';
+                }
+            });
+
+            // Clear search
+            searchClear.addEventListener('click', function() {
+                searchInput.value = '';
+                this.style.opacity = '0';
+                searchResults.textContent = '';
+                
+                // Show all projects
+                projectCards.forEach(card => {
+                    card.style.display = '';
+                });
+            });
+
+            // Search as you type with debounce
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                const searchTerm = this.value.trim().toLowerCase();
+                
+                if (searchTerm === '') {
+                    searchResults.textContent = '';
+                    projectCards.forEach(card => card.style.display = '');
+                    return;
+                }
+
+                searchTimeout = setTimeout(() => {
+                    let visibleCount = 0;
+                    
+                    projectCards.forEach(card => {
+                        const title = card.querySelector('h3').textContent.toLowerCase();
+                        const description = card.querySelector('p').textContent.toLowerCase();
+                        
+                        if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                            card.style.display = '';
+                            visibleCount++;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+
+                    // Update results count
+                    if (visibleCount === 0) {
+                        searchResults.innerHTML = 'No projects found. Try different keywords.';
+                    } else {
+                        searchResults.textContent = `Found ${visibleCount} ${visibleCount === 1 ? 'project' : 'projects'}`;
+                    }
+                }, 300);
+            });
+
+            // Add focus effect
+            searchInput.addEventListener('focus', function() {
+                this.parentElement.style.boxShadow = '0 0 0 2px var(--secondary)';
+            });
+
+            searchInput.addEventListener('blur', function() {
+                this.parentElement.style.boxShadow = 'none';
+            });
+        });
+
+        // 3D card effect functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('projectSearch');
+            const searchClear = document.getElementById('searchClear');
+            const searchResults = document.getElementById('searchResults');
+            const projectCards = document.querySelectorAll('.project-card');
+            let searchTimeout;
+
+            // Show/hide clear button based on input
+            searchInput.addEventListener('input', function() {
+                if (this.value.trim() !== '') {
+                    searchClear.style.opacity = '1';
+                } else {
+                    searchClear.style.opacity = '0';
+                    searchResults.textContent = '';
+                }
+            });
+
+            // Clear search
+            searchClear.addEventListener('click', function() {
+                searchInput.value = '';
+                this.style.opacity = '0';
+                searchResults.textContent = '';
+                
+                // Show all projects
+                projectCards.forEach(card => {
+                    card.style.display = '';
+                });
+            });
+
+            // Search as you type with debounce
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                const searchTerm = this.value.trim().toLowerCase();
+                
+                if (searchTerm === '') {
+                    searchResults.textContent = '';
+                    projectCards.forEach(card => card.style.display = '');
+                    return;
+                }
+
+                searchTimeout = setTimeout(() => {
+                    let visibleCount = 0;
+                    
+                    projectCards.forEach(card => {
+                        const title = card.querySelector('h3').textContent.toLowerCase();
+                        const description = card.querySelector('p').textContent.toLowerCase();
+                        
+                        if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                            card.style.display = '';
+                            visibleCount++;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+
+                    // Update results count
+                    if (visibleCount === 0) {
+                        searchResults.innerHTML = 'No projects found. Try different keywords.';
+                    } else {
+                        searchResults.textContent = `Found ${visibleCount} ${visibleCount === 1 ? 'project' : 'projects'}`;
+                    }
+                }, 300);
+            });
+
+            // Add focus effect
+            searchInput.addEventListener('focus', function() {
+                this.parentElement.style.boxShadow = '0 0 0 2px var(--secondary)';
+            });
+
+            searchInput.addEventListener('blur', function() {
+                this.parentElement.style.boxShadow = 'none';
+            });
+        });
+
         // Add 3D tilt effect to project cards with improved performance
         document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.project-card');
