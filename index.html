@@ -235,6 +235,14 @@
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
         }
+        
+        .project-card * {
+            pointer-events: none;
+        }
+        
+        .project-card a {
+            pointer-events: auto;
+        }
 
         .project-card:hover {
             transform: translateY(-10px) translateZ(20px);
@@ -283,9 +291,20 @@
             gap: 1rem;
         }
 
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
         .project-links a {
             font-size: 0.9rem;
             padding: 0.5rem 1rem;
+            position: relative;
+            z-index: 2;
+            pointer-events: auto;
+            transform: translateZ(20px);
         }
 
         /* Floating Elements */
@@ -761,7 +780,6 @@
             const cards = document.querySelectorAll('.project-card');
             
             cards.forEach(card => {
-                let bounds;
                 const updateTransform = (x, y) => {
                     const rect = card.getBoundingClientRect();
                     const xPos = (x - rect.left) / rect.width;
@@ -769,7 +787,15 @@
                     const xRotate = (yPos - 0.5) * 10;
                     const yRotate = (0.5 - xPos) * 10;
                     
-                    card.style.transform = `perspective(1000px) rotateX(${xRotate}deg) rotateY(${yRotate}deg) scale(1.03) translateY(-10px)`;
+                    // Don't apply transform if mouse is over a button
+                    const isOverButton = x >= rect.left && x <= rect.right && 
+                                       y >= (rect.bottom - 60) && y <= rect.bottom;
+                    
+                    if (!isOverButton) {
+                        card.style.transform = `perspective(1000px) rotateX(${xRotate}deg) rotateY(${yRotate}deg) scale(1.03) translateY(-10px)`;
+                    } else {
+                        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1.03) translateY(-10px)';
+                    }
                 };
                 
                 card.addEventListener('mousemove', (e) => {
@@ -780,6 +806,14 @@
                 
                 card.addEventListener('mouseleave', () => {
                     card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1) translateY(0)';
+                });
+                
+                // Make sure buttons remain clickable
+                const buttons = card.querySelectorAll('a');
+                buttons.forEach(button => {
+                    button.addEventListener('mouseenter', () => {
+                        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1.03) translateY(-10px)';
+                    });
                 });
             });
 
