@@ -2,4 +2,3 @@ Making Cents with Math - https://github.com/SarveshwarSenthilKumar/FinGame
 Sarveshwar's Blog - https://github.com/SarveshwarSenthilKumar/Blog
 VolunteerHub Website - https://github.com/SarveshwarSenthilKumar/VolunteerHubSite
 General Force (SkyScholars) - https://github.com/SkyScholars/General-Aerodynamic-Forces
-School FRC Site - https://github.com/SarveshwarSenthilKumar/FRC
